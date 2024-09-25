@@ -84,9 +84,18 @@ namespace SeleniumQA
 
         }
         [Test]
-        public void PlayWithButton()
+        public void FindLocators()
         {
+            // ID
 
+            var driver = new ChromeDriver();
+            driver.Navigate().GoToUrl("https://www.facebook.com");
+            var id = driver.FindElement(By.Id("email"));
+            Thread.Sleep(3000);
+
+            Console.WriteLine(id.Size);
+
+            driver.Close() ;
         }
 
     }
