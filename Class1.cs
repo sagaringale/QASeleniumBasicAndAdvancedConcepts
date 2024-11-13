@@ -19,26 +19,56 @@ namespace SeleniumQA
         public void LaunchChrome()
         {
             IWebDriver driver = new ChromeDriver();
-            driver.Navigate().GoToUrl("https://www.google.com");
+            driver.Navigate().GoToUrl("https://www.saucedemo.com/v1/");
             driver.Manage().Window.FullScreen();
             //driver.Close();
-            var text = driver.FindElement(By.Id("APjFqb"));
-            text.SendKeys("github.com");
-            text.SendKeys(Keys.Enter);
+
+            driver.FindElement(By.XPath("//div/form/input[@type='text']")).SendKeys("standard_user");
+            driver.FindElement(By.XPath("//div/form/input[@type='password']")).SendKeys("secret_sauce");
+
+            //click on login button
+
+            driver.FindElement(By.XPath("//div/form/input[@id='login-button']")).Click();
+             
             
+
+            Thread.Sleep(5000);
+
+
+            String actualvalue = driver.FindElement(By.XPath("//div[text()='Products']")).Text;
+            Assert.True(actualvalue.Contains("Products"));
        
-           Thread.Sleep(5000);
-
-            driver.SwitchTo().NewWindow(WindowType.Tab);
-            var googlebutton = driver.FindElement(By.XPath("/html[1]/body[1]/div[3]/div[1]/div[12]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/table[1]/tbody[1]/tr[2]/td[1]/div[2]/div[1]/div[1]/div[1]/h3[1]/a[1]"));
-            googlebutton.Click();
-
-
-            Thread.Sleep(15000);
+        
 
             driver.Close();
             
+        }
+        [Test]
+        public void Negative()
+        {
+            IWebDriver driver = new ChromeDriver();
+            driver.Navigate().GoToUrl("https://www.saucedemo.com/v1/");
+            driver.Manage().Window.FullScreen();
 
+            var title = driver.Title;
+            Console.WriteLine("Page Title : ");
+            Console.WriteLine(title);
+
+            //username pass
+            driver.FindElement(By.XPath("//div/form/input[@type='text']")).SendKeys("standard_user");
+            driver.FindElement(By.XPath("//div/form/input[@type='password']")).SendKeys("secret_saucee");
+
+            //click on login button
+
+            driver.FindElement(By.XPath("//div/form/input[@id='login-button']")).Click();
+
+            //assertion
+            String actualvalue = driver.FindElement(By.XPath("//div/form/h3[text()='Username and password do not match any user in this service']")).Text;
+            Assert.True(actualvalue.Contains("Username and password do not match any user in this service"));
+
+
+
+            driver.Close();
 
         }
 
