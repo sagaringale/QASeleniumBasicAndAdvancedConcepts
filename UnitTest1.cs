@@ -98,5 +98,33 @@ namespace SeleniumQA
             driver.Close() ;
         }
 
+        [Test]
+        public void ListColl()
+        {
+
+            IWebDriver driver = new ChromeDriver();
+            driver.Navigate().GoToUrl("https://www.flipkart.com/");
+            driver.Manage().Window.FullScreen();
+
+            var textxearch = driver.FindElement(By.XPath("//input[@title='Search for Products, Brands and More']"));
+            textxearch.SendKeys("Mobiles");
+            textxearch.SendKeys(Keys.Enter);
+
+           /* var mobile = driver.FindElement(By.XPath("//span[text()='Mobiles']"));
+            mobile.Click();
+            */
+
+            /*
+            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+            js.ExecuteScript("window.scrollBy(0,500)");
+
+            var mobile1 = driver.FindElement(By.XPath("(//div/a[text()='Motorola g45 5G (Brilliant Blue, 128 GB)'])[1]"));
+            mobile1.Click();*/
+            Thread.Sleep(5000);
+
+
+            driver.Close();
+        }
+
     }
 }
